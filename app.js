@@ -85,6 +85,59 @@ function formatKSh(amount) {
   return `KSh ${amount.toLocaleString('en-KE')}`;
 }
 
+function showSection(sectionId) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(`section-${sectionId}`).classList.add('active');
+  currentSection = sectionId;
+  window.scrollTo(0, 0);
+  document.body.style.overflow = '';
+  if (document.getElementById('mobileNav')) document.getElementById('mobileNav').classList.remove('open');
+}
+
+function goBack() {
+  showSection(previousSection);
+}
+
+function buildCategoryStrip() {
+  const container = document.getElementById('catStrip');
+  const mainCats = categories.filter(c => c.id !== 'all');
+  container.innerHTML = categories.map((cat, i) => `
+    <div class="cat-chip ${cat.id === 'all' ? 'active' : ''}" data-cat="${cat.id}" onclick="setCatalogFilter('${cat.id}', this)">
+      <i class="fas ${cat.icon}"></i> ${cat.label}
+    </div>
+  `).join('');
+}
+
+function buildFilterPills() {
+  const container = document.getElementById('filterPills');
+  container.innerHTML = categories.map(cat => `
+    <button class="filter-pill ${cat.id === 'all' ? 'active' : ''}" data-cat="${cat.id}" onclick="setCatalogFilter('${cat.id}', this)">
+      ${cat.label}
+    </button>
+  `).join('');
+}
+
+function setCatalogFilter(catId, el) {
+  previousSection = currentSection;
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+  if (el) el.classList.add('active');
+  activeCatalogFilter = catId;
+  displayedCount = 8;
+  renderCatalog();
+}
+
+async function loadHomeImages() {
+  const heroImgs = await fetchUnsplashImage('modern luxury furniture living room', 1);
+  if (heroImgs[0]) document.getElementById('heroImg').src = heroImgs[0].url;
+  
+  const bannerImgs = await fetchUnsplashImage('scandinavian interior design furniture', 1);
+  if (bannerImgs[0]) document.getElementById('bannerImg').src = bannerImgs[0].url;
+  
+  const aboutImgs = await fetchUnsplashImage('premium furniture showroom', 1);
+  if (aboutImgs[0]) document.getElementById('aboutImg').src = aboutImgs[0].url;
+}
+
 window.addEventListener('DOMContentLoaded', async () => {
   setTimeout(() => document.getElementById('loader').classList.add('hidden'), 2000);
   updateCartUI();
@@ -523,3 +576,70 @@ function showToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('visible'), 2800);
 }
+
+function showSection(sectionId) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(`section-${sectionId}`).classList.add('active');
+  currentSection = sectionId;
+  window.scrollTo(0, 0);
+  document.body.style.overflow = '';
+  if (document.getElementById('mobileNav')) document.getElementById('mobileNav').classList.remove('open');
+}
+
+function goBack() {
+  showSection(previousSection);
+}
+
+function buildCategoryStrip() {
+  const container = document.getElementById('catStrip');
+  container.innerHTML = categories.map((cat, i) => `
+    <div class="cat-chip ${cat.id === 'all' ? 'active' : ''}" data-cat="${cat.id}" onclick="setCatalogFilter('${cat.id}', this)">
+      <i class="fas ${cat.icon}"></i> ${cat.label}
+    </div>
+  `).join('');
+}
+
+function buildFilterPills() {
+  const container = document.getElementById('filterPills');
+  container.innerHTML = categories.map(cat => `
+    <button class="filter-pill ${cat.id === 'all' ? 'active' : ''}" data-cat="${cat.id}" onclick="setCatalogFilter('${cat.id}', this)">
+      ${cat.label}
+    </button>
+  `).join('');
+}
+
+function setCatalogFilter(catId, el) {
+  previousSection = currentSection;
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+  if (el) el.classList.add('active');
+  activeCatalogFilter = catId;
+  displayedCount = 8;
+  renderCatalog();
+}
+
+async function loadHomeImages() {
+  const heroImgs = await fetchUnsplashImage('modern luxury furniture living room', 1);
+  if (heroImgs[0]) document.getElementById('heroImg').src = heroImgs[0].url;
+  
+  const bannerImgs = await fetchUnsplashImage('scandinavian interior design furniture', 1);
+  if (bannerImgs[0]) document.getElementById('bannerImg').src = bannerImgs[0].url;
+  
+  const aboutImgs = await fetchUnsplashImage('premium furniture showroom', 1);
+  if (aboutImgs[0]) document.getElementById('aboutImg').src = aboutImgs[0].url;
+}
+
+window.addEventListener('DOMContentLoaded', async () => {
+  setTimeout(() => document.getElementById('loader').classList.add('hidden'), 2000);
+  updateCartUI();
+  buildCategoryStrip();
+  buildFilterPills();
+  await loadHomeImages();
+  renderFeatured();
+  renderNewArrivals();
+  renderCatalog();
+  renderCategoriesGrid();
+  loadCategoryImages();
+});
+
+
