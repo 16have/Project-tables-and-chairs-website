@@ -1,0 +1,24 @@
+{
+  "name": "project-tables-and-chairs-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/16have/Project-tables-and-chairs-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/16have/Project-tables-and-chairs-website/issues"
+  },
+  "homepage": "https://github.com/16have/Project-tables-and-chairs-website#readme",
+  "devDependencies": {
+    "jest": "^30.3.0"
+  }
+}
