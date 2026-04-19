@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TABLES AND CHAIRS | Premium Furniture Kenya</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-logo">TABLES AND CHAIRS</div>
+    <div class="loader-bar"><span></span></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-left">
+      <span class="nav-logo">TABLES AND CHAIRS</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showSection('home')" class="nav-link active" data-section="home">Home</a></li>
+      <li><a href="#" onclick="showSection('catalog')" class="nav-link" data-section="catalog">Catalog</a></li>
+      <li><a href="#" onclick="showSection('categories')" class="nav-link" data-section="categories">Categories</a></li>
+      <li><a href="#" onclick="showSection('about')" class="nav-link" data-section="about">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="openSearch()"><i class="fas fa-search"></i></button>
+      <button class="icon-btn cart-btn" onclick="toggleCart()">
+        <i class="fas fa-shopping-bag"></i>
+        <span id="cart-count" class="cart-count">0</span>
+      </button>
+    </div>
+    <button class="hamburger" onclick="toggleMobileNav()"><i class="fas fa-bars"></i></button>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="close-mobile" onclick="toggleMobileNav()"><i class="fas fa-times"></i></button>
+    <ul>
+      <li><a href="#" onclick="showSection('home');toggleMobileNav()">Home</a></li>
+      <li><a href="#" onclick="showSection('catalog');toggleMobileNav()">Catalog</a></li>
+      <li><a href="#" onclick="showSection('categories');toggleMobileNav()">Categories</a></li>
+      <li><a href="#" onclick="showSection('about');toggleMobileNav()">About</a></li>
+    </ul>
+  </div>
+
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay" id="searchOverlay">
+    <button class="close-search" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+    <div class="search-inner">
+      <p class="search-label">What are you looking for?</p>
+      <input type="text" id="searchInput" placeholder="e.g. Sofa, Bed, Chair..." oninput="filterProducts(this.value)"/>
+    </div>
+  </div>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>Your Bag <span id="cart-item-count">(0)</span></h3>
+      <button onclick="toggleCart()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <i class="fas fa-shopping-bag"></i>
+        <p>Your bag is empty</p>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">KSh 0</span>
+      </div>
+      <button class="checkout-btn" onclick="showSection('payment')">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- ============ HOME SECTION ============ -->
+  <section id="section-home" class="section active">
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-bg">
+        <img id="heroImg" src="" alt="Hero furniture" />
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">New Collection 2025</p>
+        <h1 class="hero-title">Where Comfort<br/><em>Meets Craft</em></h1>
+        <p class="hero-sub">Premium furniture crafted for modern Kenyan living spaces.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="showSection('catalog')">Shop Now</button>
+          <button class="btn-ghost" onclick="showSection('categories')">Explore Categories</button>
+        </div>
+      </div>
+      <div class="hero-scroll"><span></span></div>
+    </div>
+
+    <!-- CATEGORIES STRIP -->
+    <div class="categories-strip">
+      <div class="cat-strip-inner" id="catStrip"></div>
+    </div>
+
+    <!-- FEATURED PRODUCTS -->
+    <div class="section-block">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Curated Picks</p>
+          <h2>Featured Pieces</h2>
+        </div>
+        <a href="#" onclick="showSection('catalog')" class="see-all">View All <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="products-grid" id="featuredGrid"></div>
+    </div>
+
+    <!-- BANNER -->
+    <div class="mid-banner">
+      <div class="mid-banner-img"><img id="bannerImg" src="" alt="Banner"/></div>
+      <div class="mid-banner-content">
+        <p class="eyebrow">Timeless Design</p>
+        <h2>Furniture that tells<br/><em>your story</em></h2>
+        <p>Every piece in our collection is selected for quality, durability, and elegance suited to African homes.</p>
+        <button class="btn-primary" onclick="showSection('catalog')">Browse Collection</button>
+      </div>
+    </div>
+
+    <!-- NEW ARRIVALS -->
+    <div class="section-block">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Fresh In</p>
+          <h2>New Arrivals</h2>
+        </div>
+      </div>
+      <div class="products-grid" id="newArrivalsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ CATALOG SECTION ============ -->
+  <section id="section-catalog" class="section">
+    <div class="catalog-header">
+      <h2>Full Catalog</h2>
+      <p>Discover our complete furniture collection</p>
+    </div>
+    <div class="catalog-controls">
+      <div class="filter-pills" id="filterPills"></div>
+      <div class="sort-control">
+        <label>Sort by:</label>
+        <select id="sortSelect" onchange="sortProducts()">
+          <option value="default">Default</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
+    </div>
+    <div class="products-grid" id="catalogGrid"></div>
+    <div class="load-more-wrap">
+      <button class="btn-outline" id="loadMoreBtn" onclick="loadMore()">Load More</button>
+    </div>
+  </section>
+
+  <!-- ============ CATEGORIES SECTION ============ -->
+  <section id="section-categories" class="section">
+    <div class="catalog-header">
+      <h2>Shop by Category</h2>
+      <p>Find exactly what your space needs</p>
+    </div>
+    <div class="categories-grid" id="categoriesGrid"></div>
+  </section>
+
+  <!-- ============ PRODUCT DETAIL SECTION ============ -->
+  <section id="section-product" class="section">
+    <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+    <div class="product-detail" id="productDetail"></div>
+    <div class="section-block">
+      <div class="section-header"><div><p class="eyebrow">You may also like</p><h2>Related Items</h2></div></div>
+      <div class="products-grid" id="relatedGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ PAYMENT SECTION ============ -->
+  <section id="section-payment" class="section">
+    <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back to Cart</button>
+    <div class="payment-wrap">
+      <div class="payment-form-side">
+        <h2>Checkout</h2>
+        <div class="payment-steps">
+          <div class="step active" id="step1-tab">1. Delivery</div>
+          <div class="step" id="step2-tab">2. Payment</div>
+          <div class="step" id="step3-tab">3. Confirm</div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="pay-step" id="step1">
+          <h3>Delivery Information</h3>
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" id="fname" placeholder="John"/></div>
+            <div class="form-group"><label>Last Name</label><input type="text" id="lname" placeholder="Doe"/></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" id="email" placeholder="john@example.com"/></div>
+          <div class="form-group"><label>Phone (M-Pesa)</label><input type="tel" id="phone" placeholder="+254 7XX XXX XXX"/></div>
+          <div class="form-group"><label>City</label>
+            <select id="city">
+              <option>Nairobi</option><option>Mombasa</option><option>Kisumu</option><option>Nakuru</option><option>Eldoret</option><option>Thika</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Delivery Address</label><input type="text" id="address" placeholder="Street, Area"/></div>
+          <button class="btn-primary full-width" onclick="goToStep(2)">Continue to Payment</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="pay-step" id="step2" style="display:none">
+          <h3>Payment Method</h3>
+          <div class="payment-methods">
+            <label class="pay-method active-method" id="mpesa-opt">
+              <input type="radio" name="paymethod" value="mpesa" checked onchange="selectPayMethod('mpesa')"/>
+              <div class="method-icon mpesa-icon">M</div>
+              <div><strong>M-Pesa</strong><span>Lipa na M-Pesa</span></div>
+            </label>
+            <label class="pay-method" id="card-opt">
+              <input type="radio" name="paymethod" value="card" onchange="selectPayMethod('card')"/>
+              <div class="method-icon"><i class="fas fa-credit-card"></i></div>
+              <div><strong>Card</strong><span>Visa / Mastercard</span></div>
+            </label>
+            <label class="pay-method" id="bank-opt">
+              <input type="radio" name="paymethod" value="bank" onchange="selectPayMethod('bank')"/>
+              <div class="method-icon"><i class="fas fa-university"></i></div>
+              <div><strong>Bank Transfer</strong><span>Direct bank</span></div>
+            </label>
+          </div>
+          <div id="mpesa-fields" class="pay-fields">
+            <div class="form-group"><label>M-Pesa Number</label><input type="tel" id="mpesa-num" placeholder="+254 7XX XXX XXX"/></div>
+            <p class="pay-note"><i class="fas fa-info-circle"></i> You will receive an STK push on this number.</p>
+          </div>
+          <div id="card-fields" class="pay-fields" style="display:none">
+            <div class="form-group"><label>Card Number</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19"/></div>
+            <div class="form-row">
+              <div class="form-group"><label>Expiry</label><input type="text" placeholder="MM/YY" maxlength="5"/></div>
+              <div class="form-group"><label>CVV</label><input type="text" placeholder="123" maxlength="3"/></div>
+            </div>
+          </div>
+          <div id="bank-fields" class="pay-fields" style="display:none">
+            <p class="pay-note">Transfer to: <strong>TABLES AND CHAIRS  Furniture Ltd</strong><br/>Account: <strong>01234567890</strong><br/>Bank: <strong>KCB Bank</strong></p>
+          </div>
+          <div class="step-btns">
+            <button class="btn-ghost" onclick="goToStep(1)">Back</button>
+            <button class="btn-primary" onclick="goToStep(3)">Review Order</button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="pay-step" id="step3" style="display:none">
+          <h3>Order Review</h3>
+          <div id="orderReviewItems"></div>
+          <div class="order-totals">
+            <div class="order-row"><span>Subtotal</span><span id="rev-subtotal"></span></div>
+            <div class="order-row"><span>Delivery (Nairobi)</span><span>KSh 500</span></div>
+            <div class="order-row total-row"><span>Total</span><span id="rev-total"></span></div>
+          </div>
+          <button class="btn-primary full-width" onclick="placeOrder()">Place Order</button>
+          <div class="step-btns" style="margin-top:1rem"><button class="btn-ghost full-width" onclick="goToStep(2)">Back</button></div>
+        </div>
+      </div>
+
+      <div class="order-summary-side">
+        <h3>Order Summary</h3>
+        <div id="checkoutItems"></div>
+        <div class="order-totals">
+          <div class="order-row"><span>Subtotal</span><span id="checkout-sub"></span></div>
+          <div class="order-row"><span>Delivery</span><span>KSh 500</span></div>
+          <div class="order-row total-row"><span>Total</span><span id="checkout-total"></span></div>
+        </div>
+        <div class="trust-badges">
+          <div><i class="fas fa-shield-alt"></i> Secure Payment</div>
+          <div><i class="fas fa-truck"></i> Fast Delivery</div>
+          <div><i class="fas fa-undo"></i> Easy Returns</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ORDER SUCCESS ============ -->
+  <section id="section-success" class="section">
+    <div class="success-wrap">
+      <div class="success-icon"><i class="fas fa-check"></i></div>
+      <h2>Order Confirmed!</h2>
+      <p>Thank you for your purchase. We'll send a confirmation to your email shortly.</p>
+      <p class="order-num">Order #<span id="orderNum"></span></p>
+      <button class="btn-primary" onclick="showSection('home')">Continue Shopping</button>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT SECTION ============ -->
+  <section id="section-about" class="section">
+    <div class="about-hero">
+      <img id="aboutImg" src="" alt="About"/>
+      <div class="about-hero-content">
+        <p class="eyebrow">Our Story</p>
+        <h2>Crafting Comfort<br/><em>Since 2010</em></h2>
+      </div>
+    </div>
+    <div class="about-body">
+      <div class="about-text">
+        <h3>Who We Are</h3>
+        <p>TABLES AND CHAIRS  is Kenya's premier furniture destination, bringing world-class design to African homes. From our showroom in Nairobi to delivery across the country, we believe every home deserves beautiful, durable furniture.</p>
+        <p>Our collection spans modern minimalism, classic elegance, and functional office solutions — all priced for Kenyan families.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat"><span>2,000+</span><p>Happy Customers</p></div>
+        <div class="stat"><span>500+</span><p>Products</p></div>
+        <div class="stat"><span>47</span><p>Counties Served</p></div>
+        <div class="stat"><span>15+</span><p>Years Experience</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ORDER SUCCESS MODAL -->
+  <div class="modal-overlay" id="successModal" style="display:none">
+    <div class="modal">
+      <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
+      <h3>Order Placed!</h3>
+      <p>Your order <strong>#<span id="modalOrderNum"></span></strong> has been received.</p>
+      <p>Expect delivery within <strong>3–5 business days</strong>.</p>
+      <button class="btn-primary" onclick="closeModal()">Continue Shopping</button>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Customer Service</h4>
+        <ul>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Shipping & Delivery</a></li>
+          <li><a href="#">Returns & Exchanges</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Sustainability</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 TABLES AND CHAIRS  Furniture Ltd. All rights reserved.</p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </footer>
+  
+
+  <script src="app.js"></script>
+</body>
+</html>
